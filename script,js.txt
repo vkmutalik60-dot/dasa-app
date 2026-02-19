@@ -1,0 +1,50 @@
+let allSongs = [];
+
+// Load data from JSON file
+async function loadSongs() {
+    try {
+        const response = await fetch('songs.json');
+        allSongs = await response.json();
+        renderSongs(allSongs);
+    } catch (error) {
+        console.error("Error loading songs:", error);
+    }
+}
+
+function renderSongs(data) {
+    const songListContainer = document.getElementById('songList');
+    songListContainer.innerHTML = data.map((song, index) => `
+        <div class="song-card" onclick="openModal(${index})">
+            <h3>${song.title}</h3>
+            <p class="author-tag">${song.author}</p>
+        </div>
+    `).join('');
+}
+
+function filterSongs() {
+    const term = document.getElementById('searchBar').value.toLowerCase();
+    const filtered = allSongs.filter(s => 
+        s.title.toLowerCase().includes(term) || 
+        s.author.toLowerCase().includes(term) ||
+        s.lyrics.toLowerCase().includes(term)
+    );
+    renderSongs(filtered);
+}
+
+function openModal(index) {
+    const song = allSongs[index];
+    document.getElementById('modalTitle').innerText = song.title;
+    document.getElementById('modalAuthor').innerText = `ಕರ್ತೃ: ${song.author}`;
+    document.getElementById('modalLyrics').innerText = song.lyrics;
+    document.getElementById('songModal').style.display = 'block';
+    // Prevent background scrolling when modal is open
+    document.body.style.overflow = 'hidden'; 
+}
+
+function closeModal() {
+    document.getElementById('songModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Start the app
+loadSongs();
