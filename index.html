@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ದಾಸ ಸಾಹಿತ್ಯ (Dasa Sahitya)</title>
+    
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#8B3A4F;">
+    
+    <style>
+        
+        :root {
+            --primary-color: #8B3A4F;;
+            --bg-color: #fcfcfc;
+            --text-color: #333333;
+            --list-border: #eeeeee;
+            --app-bg: #ffffff;
+            --search-bg: #f5f5f5;
+            --input-bg: #ffffff;
+            --input-border: #ccc;
+            --hover-bg: #fff3e0;
+            --info-box-bg: #fff3e0;
+            --btn-bg: #f0f0f0;
+            --btn-border: #853953;
+            --share-bg: #e8f5e9;
+            --share-text: #2e7d32;
+            --share-border: #c8e6c9;
+            --section-header: #f9f9f9;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --list-border: #333333;
+            --app-bg: #1e1e1e;
+            --search-bg: #2c2c2c;
+            --input-bg: #333333;
+            --input-border: #555555;
+            --hover-bg: #2a2a2a;
+            --info-box-bg: #2c2c2c;
+            --btn-bg: #333333;
+            --btn-border: #555555;
+            --share-bg: #1b5e20;
+            --share-text: #c8e6c9;
+            --share-border: #2e7d32;
+            --section-header: #1a1a1a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+         #app-footer {
+            text-align: center;
+            padding: 15px 10px;
+            margin-top: 30px;
+            font-size: 1rem;
+            color: #fffdfd; 
+            border-top: 1px solid #ccc; /* This creates the line! */
+            background-color: #8B3A4F;
+        }
+
+        body.dark-mode #app-footer {
+            color: #aaa;
+            border-top: 1px solid #444; /* Dark mode line */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s, color 0.3s;
+            -webkit-touch-callout: none; 
+            -webkit-user-select: none;   
+            -moz-user-select: none;      
+            -ms-user-select: none;       
+            user-select: none;           
+        }
+
+        input, select, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
+        #app-container {
+            max-width: 600px; 
+            margin: 0 auto;
+            background: var(--app-bg);
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            transition: background-color 0.3s;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 1.2rem;
+            margin-left: 10px;
+            flex-grow: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .header-btn {
+            background: none; border: none; color: white;
+            font-size: 1.3rem; cursor: pointer; padding: 0 8px;
+        }
+
+        #back-btn { display: none; padding: 4px 15px; font-size: 2rem; }
+
+        #search-container {
+            padding: 6px 15px;
+            background-color: var(--search-bg);
+            border-bottom: 1px solid var(--list-border);
+            transition: background-color 0.3s;
+        }
+
+        .input-box {
+            width: 100%; padding: 10px; font-size: 1rem;
+            background-color: var(--input-bg); color: var(--text-color);
+            border: 1px solid var(--input-border); border-radius: 6px;
+            outline: none; transition: background-color 0.3s, color 0.3s;
+        }
+
+        .input-box:focus { border-color: var(--primary-color); }
+
+        .interactive-list { list-style: none; }
+
+        .interactive-list li {
+            padding: 4px 16px; 
+            border-bottom: 1px solid var(--list-border);
+            cursor: pointer; transition: background-color 0.2s;
+            font-size: 1.05rem; font-weight: bold; color: var(--text-color);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .interactive-list li:hover, .interactive-list li:active { background-color: var(--hover-bg); }
+
+        .arrow-icon { color: #888; font-size: 1.2rem; }
+        
+        .section-title {
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-weight: bold;
+            background-color: var(--section-header);
+            border-bottom: 1px solid var(--list-border);
+        }
+
+        /* SMART RESPONSIVE GRID FOR CATEGORIES */
+        .category-grid {
+            display: grid; 
+            /* MAGIC TRICK: Auto-fits 2 columns on small screens, expands to 3 on wider screens! */
+            grid-template-columns: 1fr;; 
+            gap: 4px; 
+            padding: 4px 16px; 
+            list-style: none; 
+            background-color: var(--app-bg);
+        }
+
+        .category-grid li {
+            background-color: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            border-radius: 8px; 
+            padding: 4px 16px;
+            cursor: pointer;
+            font-weight: normal;
+            font-size: 1.1rem; /* Makes the font a bit bigger too! */
+            color: var(--text-color);
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between; /* Perfect left/right alignment */
+            align-items: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .category-grid li:hover, .category-grid li:active { 
+            background-color: var(--hover-bg); 
+            border-color: var(--primary-color); 
+        }
+
+        .category-grid .song-count-badge {
+            background-color: rgba(0, 0, 0, 0.08); 
+            padding: px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: var(--text-color);
+            margin-left: 5px;
+        }
+        
+        body.dark-mode .category-grid .song-count-badge { background-color: rgba(255,255,255,0.1); }
+
+        /* SMART RESPONSIVE GRID FOR SONGS */
+        .song-grid {
+            display: grid; 
+          grid-template-columns: 1fr;; 
+            gap: 4px; 
+             padding: 4px 10px;
+            list-style: none; 
+            background-color: var(--app-bg);
+        }
+
+        .song-grid li {
+            background-color: var(--btn-bg); 
+            border: 1px solid var(--btn-border);
+            border-radius: 8px; 
+            padding: 8px; 
+            text-align: left; 
+            cursor: pointer;
+            font-weight: bold; 
+            font-size: 1.1rem; /* Makes the font a bit bigger too! */
+            line-height: 1.0; 
+            color: var(--text-color);
+            transition: all 0.2s; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            height: 50px; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            display: -webkit-box;
+            display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Limits text to exactly 2 lines */
+    overflow: hidden;      /* 👈 THIS is the secret ingredient that makes it work! */
+        }
+
+        .song-grid li:hover, .song-grid li:active { background-color: var(--hover-bg); border-color: var(--primary-color); }
+
+        /* VIEWS */
+        #sub-category-view, #list-view, #detail-view, #about-view { display: none; animation: fadeIn 0.3s; }
+        #dasaru-view { display: block; animation: fadeIn 0.3s; }
+
+        #dasaru-info-box {
+            background-color: var(--info-box-bg); border-left: 4px solid var(--primary-color);
+            padding: 4px 12px; font-size: 0.95rem; line-height: 1.5; color: var(--text-color); 
+            display: none; border-bottom: 1px solid var(--list-border); transition: background-color 0.3s;
+        }
+
+        #detail-view { padding: 6px; }
+        #song-title-detail { color: var(--primary-color); font-size: 1.0rem; margin: 0 0 10px 0; text-align: center; }
+#song-dasaru-detail {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #666;
+            margin-top: -5px;
+            margin-bottom: 15px;
+            font-style: italic;
+            font-weight: bold;
+        }
+        body.dark-mode #song-dasaru-detail { color: #aaa; }
+
+        .action-row {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 15px;
+        }
+
+        .font-controls { display: flex; gap: 8px; }
+        .font-btn {
+            background-color: var(--btn-bg); color: var(--text-color); border: 1px solid var(--btn-border); 
+            padding: 5px 12px; border-radius: 6px; font-size: 1rem; font-weight: bold; cursor: pointer; 
+            transition: background-color 0.3s, color 0.3s; display: flex; align-items: center; justify-content: center;
+        }
+        .font-btn:active { background-color: var(--hover-bg); }
+
+        #share-btn {
+            background-color: var(--share-bg); color: var(--share-text); border: 1px solid var(--share-border); 
+            padding: 6px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; cursor: pointer; 
+            display: flex; align-items: center; gap: 5px; white-space: nowrap; transition: background-color 0.3s, color 0.3s;
+        }
+
+       #song-lyrics { 
+            padding: 20px; /* 👈 This pushes the text away from the edges! */
+            font-size: 1.1rem; /* Slightly larger for easier reading */
+            white-space: pre-wrap; 
+            line-height: 1.6; /* 👈 More space between lines of the song */
+            transition: font-size 0.2s ease; 
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        <header>
+            <button id="back-btn" class="header-btn">⬅</button>
+            <h3 id="app-title">ಸಮಗ್ರ ದಾಸಸಾಹಿತ್ಯ ಮಂಜರಿ</h3>
+            
+            <button id="install-btn" class="header-btn" style="display: none;">⬇️</button>
+            
+            <button id="fav-menu-btn" class="header-btn">❤️</button>
+            <button id="theme-btn" class="header-btn">🌙</button>
+            <button id="about-btn" class="header-btn">ℹ️</button>
+        </header>
+
+        <div id="search-container">
+            <input type="text" id="search-input" class="input-box" placeholder="ಹುಡುಕಿ (Search songs)...">
+        </div>
+
+        <div id="dasaru-view">
+            <ul id="all-songs-list" class="interactive-list"></ul>
+            
+            <div class="section-title"><h2>ಸ್ತೋತ್ರಗಳ ವಿಂಗಡಣೆ/ಸಂಖ್ಯೆಗಳು</h2> </div>
+            <ul id="god-list" class="category-grid"></ul>
+            
+            <div class="section-title"><h2>'ಅ'ಕಾರಾದಿ ದಾಸರುಗಳ ಕೃತಿಗಳು/ಸಂಖ್ಯೆಗಳು</h2></div>
+            <ul id="dasaru-list-col" class="category-grid"></ul>
+        </div>
+
+        <div id="sub-category-view">
+            <ul id="sub-category-all" class="interactive-list"></ul>
+            <ul id="sub-category-list" class="category-grid"></ul>
+        </div>
+
+        <div id="list-view">
+            <div id="dasaru-info-box"></div>
+            <ul id="song-list" class="song-grid"></ul>
+            <div id="no-results">ಯಾವುದೇ ಹಾಡುಗಳು ಕಂಡುಬಂದಿಲ್ಲ (No songs found).</div>
+        </div>
+
+        <div id="detail-view">
+            <h2 id="song-title-detail"></h2>
+	    <div id="song-dasaru-detail"></div>
+            <div class="action-row">
+                <div class="font-controls">
+                    <button id="font-decrease" class="font-btn">A-</button>
+                    <button id="font-increase" class="font-btn">A+</button>
+                    <button id="fav-toggle-btn" class="font-btn">🤍</button>
+                </div>
+                <button id="share-btn">🔗 ಹಂಚಿಕೊಳ್ಳಿ</button>
+            </div>
+            <div id="song-lyrics"></div>
+        </div>
+
+        <div id="about-view">
+            <h2>About This App (ಅಪ್ಲಿಕೇಶನ್ ಬಗ್ಗೆ)</h2>
+            <img src="about-photo.jpg" alt="Dasa Image" style="width: 100%; max-width: 400px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: block; margin-left: auto; margin-right: auto;">
+            <p>Welcome to the Dasa Sahitya app. This application is created to help devotees easily read and search for beautiful Kannada devotional songs.</p>
+            <br>
+            <p><strong>Features:</strong><br>- Search songs easily.<br>- Save your favorite songs (❤️).<br>- Browse by Deity and Dasaru.<br>- Deep Sub-Category grid for Deities.<br>- Share direct links to specific songs.<br>- Adjust text size & Dark Mode for easy reading.</p>
+        </div>
+		<div id="about-view">
+            </div>
+
+        <footer id="app-footer">
+            <p>© ಶ್ರೀ ವಿಜಯವಿಟ್ಟಲ ಸಂಶೋಧನಾಪ್ರತಿಷ್ಠಾನ</p>
+        </footer>
+    </div> ```
+        
+    </div>
+
+    <script src="songs.js"></script>
+
+    <script>
+        const dasaruNotes = {
+            "ಜಗನ್ನಾಥ ದಾಸರು": "ಜಗನ್ನಾಥ ದಾಸರು (1728–1809) ಹರಿದಾಸ ಪರಂಪರೆಯ ಪ್ರಮುಖ ದಾಸರು. ಇವರ ಪ್ರಸಿದ್ಧ ಕೃತಿ 'ಹರಿಕಥಾಮೃತಸಾರ'.",
+            "ಪುರಂದರ ದಾಸರು": "ಪುರಂದರ ದಾಸರು (1484–1564) ಕರ್ನಾಟಕ ಸಂಗೀತದ ಪಿತಾಮಹ ಎಂದು ಪ್ರಸಿದ್ಧರಾಗಿದ್ದಾರೆ. ಇವರು ದಾಸ ಸಾಹಿತ್ಯದ ಅತಿ ದೊಡ್ಡ ಕವಿ."
+        };
+
+        const dasaruView = document.getElementById('dasaru-view');
+        const subCategoryView = document.getElementById('sub-category-view');
+        const listView = document.getElementById('list-view');
+        const detailView = document.getElementById('detail-view');
+        const aboutView = document.getElementById('about-view');
+        
+        const allSongsListEl = document.getElementById('all-songs-list');
+        const godListEl = document.getElementById('god-list'); 
+        const dasaruListColEl = document.getElementById('dasaru-list-col');
+        const subCategoryAllEl = document.getElementById('sub-category-all');
+        const subCategoryListEl = document.getElementById('sub-category-list');
+        const songListEl = document.getElementById('song-list');
+        
+        const backBtn = document.getElementById('back-btn');
+        const aboutBtn = document.getElementById('about-btn');
+        const themeBtn = document.getElementById('theme-btn'); 
+        const favMenuBtn = document.getElementById('fav-menu-btn'); 
+        const favToggleBtn = document.getElementById('fav-toggle-btn'); 
+        const shareBtn = document.getElementById('share-btn'); 
+        const fontIncreaseBtn = document.getElementById('font-increase');
+        const fontDecreaseBtn = document.getElementById('font-decrease');
+        
+        const songTitleDetail = document.getElementById('song-title-detail');
+	const songDasaruDetail = document.getElementById('song-dasaru-detail'); //
+        const songLyricsEl = document.getElementById('song-lyrics');
+        const appTitle = document.getElementById('app-title');
+        const searchInput = document.getElementById('search-input');
+        const noResults = document.getElementById('no-results');
+        const dasaruInfoBox = document.getElementById('dasaru-info-box');
+
+        let currentCategory = ''; 
+        let currentCategoryType = 'all'; 
+        let currentMainCategory = ''; 
+        let savedScrollPosition = 0; 
+
+        let favoriteSongs = JSON.parse(localStorage.getItem('savedFavorites')) || [];
+
+        function setView(viewName) {
+            dasaruView.style.display = 'none';
+            subCategoryView.style.display = 'none';
+            listView.style.display = 'none';
+            detailView.style.display = 'none';
+            aboutView.style.display = 'none';
+            dasaruInfoBox.style.display = 'none';
+
+            document.getElementById(viewName).style.display = 'block';
+
+            if(viewName === 'dasaru-view') {
+                backBtn.style.display = 'none';
+                aboutBtn.style.display = 'block';
+                themeBtn.style.display = 'block';
+                favMenuBtn.style.display = 'block';
+            } else {
+                backBtn.style.display = 'block';
+                aboutBtn.style.display = 'none';
+                themeBtn.style.display = 'none';
+                favMenuBtn.style.display = 'none';
+            }
+        }
+
+        let isDarkMode = localStorage.getItem('savedTheme') === 'dark';
+        if (isDarkMode) { document.body.classList.add('dark-mode'); themeBtn.textContent = '☀️'; }
+
+        themeBtn.onclick = () => {
+            document.body.classList.toggle('dark-mode');
+            isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('savedTheme', isDarkMode ? 'dark' : 'light');
+            themeBtn.textContent = isDarkMode ? '☀️' : '🌙';
+        };
+
+        let currentFontSize = parseFloat(localStorage.getItem('savedFontSize')) || 1.0;
+        songLyricsEl.style.fontSize = currentFontSize + 'rem';
+
+        fontIncreaseBtn.onclick = () => {
+            if (currentFontSize < 1.8) { 
+                currentFontSize += 0.1;
+                songLyricsEl.style.fontSize = currentFontSize + 'rem';
+                localStorage.setItem('savedFontSize', currentFontSize); 
+            }
+        };
+
+        fontDecreaseBtn.onclick = () => {
+            if (currentFontSize > 0.8) { 
+                currentFontSize -= 0.1;
+                songLyricsEl.style.fontSize = currentFontSize + 'rem';
+                localStorage.setItem('savedFontSize', currentFontSize); 
+            }
+        };
+
+        favMenuBtn.onclick = () => {
+            currentCategoryType = 'favorites';
+            searchInput.value = ''; 
+            const favList = dasaSongs.filter(song => favoriteSongs.includes(song.id));
+            renderSongList(favList);
+            setView('list-view');
+            appTitle.textContent = `ಮೆಚ್ಚಿನವು (Favorites) - ${favList.length}`;
+            window.scrollTo(0, 0);
+        };
+
+        favToggleBtn.onclick = () => {
+            if (favoriteSongs.includes(currentSongId)) {
+                favoriteSongs = favoriteSongs.filter(id => id !== currentSongId);
+                favToggleBtn.textContent = '🤍';
+            } else {
+                favoriteSongs.push(currentSongId);
+                favToggleBtn.textContent = '❤️';
+            }
+            localStorage.setItem('savedFavorites', JSON.stringify(favoriteSongs));
+        };
+
+        function renderHomeCategories() {
+            allSongsListEl.innerHTML = ''; 
+            godListEl.innerHTML = ''; 
+            dasaruListColEl.innerHTML = '';
+
+            const allLi = document.createElement('li');
+            allLi.innerHTML = `<span>ಸಮಗ್ರ ಕೃತಿಗಳು(Click here)-<span class="song-count-badge">(${dasaSongs.length})</span></span> <span class="arrow-icon">›</span>`;
+            allLi.onclick = () => openCategory('all', 'ಸಮಗ್ರ ಕೃತಿಗಳು', 'all');
+            allSongsListEl.appendChild(allLi);
+
+            const uniqueGods = [...new Set(dasaSongs.map(song => song.god).filter(Boolean))]; 
+            if (uniqueGods.length > 0) {
+                uniqueGods.sort((a, b) => a.localeCompare(b, 'kn'));
+                uniqueGods.forEach(god => {
+                    const count = dasaSongs.filter(song => song.god === god).length;
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>${god}</span><span class="song-count-badge">${count}</span>`;
+                    li.onclick = () => openCategory(god, god, 'god');
+                    godListEl.appendChild(li);
+                });
+            }
+
+            const uniqueDasarus = [...new Set(dasaSongs.map(song => song.dasaru).filter(Boolean))];
+            if (uniqueDasarus.length > 0) {
+                uniqueDasarus.sort((a, b) => a.localeCompare(b, 'kn'));
+                uniqueDasarus.forEach(dasaru => {
+                    const count = dasaSongs.filter(song => song.dasaru === dasaru).length;
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>${dasaru}</span><span class="song-count-badge">${count}</span>`;
+                    li.onclick = () => openCategory(dasaru, dasaru, 'dasaru');
+                    dasaruListColEl.appendChild(li);
+                });
+            }
+        }
+
+        function openCategory(categoryValue, displayTitle, type) {
+            currentCategory = categoryValue;
+            currentCategoryType = type;
+            searchInput.value = ''; 
+
+            let filteredSongs = dasaSongs;
+
+            if (type === 'god') {
+                filteredSongs = dasaSongs.filter(song => song.god === categoryValue);
+                const uniqueSubGods = [...new Set(filteredSongs.map(s => s.subGod).filter(Boolean))];
+                
+                if (uniqueSubGods.length > 0) {
+                    currentMainCategory = categoryValue; 
+                    renderSubCategories(uniqueSubGods, filteredSongs, displayTitle);
+                    return; 
+                }
+            } else if (type === 'subGod') {
+                filteredSongs = dasaSongs.filter(song => song.subGod === categoryValue && song.god === currentMainCategory);
+            } else if (type === 'godAll') {
+                filteredSongs = dasaSongs.filter(song => song.god === currentMainCategory);
+            } else if (type === 'dasaru') {
+                filteredSongs = dasaSongs.filter(song => song.dasaru === categoryValue);
+                if (dasaruNotes[categoryValue]) {
+                    dasaruInfoBox.innerHTML = `<i>${dasaruNotes[categoryValue]}</i>`;
+                    dasaruInfoBox.style.display = 'block';
+                }
+            }
+
+            renderSongList(filteredSongs);
+            setView('list-view');
+            appTitle.textContent = `${displayTitle} (${filteredSongs.length})`; 
+            window.scrollTo(0, 0);
+        }
+
+        function renderSubCategories(subGods, allGodSongs, mainTitle) {
+            subCategoryAllEl.innerHTML = '';
+            subCategoryListEl.innerHTML = '';
+            subGods.sort((a, b) => a.localeCompare(b, 'kn'));
+
+            const allLi = document.createElement('li');
+            allLi.innerHTML = `<span>ಎಲ್ಲಾ ${mainTitle} ಹಾಡುಗಳು <span class="song-count-badge">(${allGodSongs.length})</span></span> <span class="arrow-icon">›</span>`;
+            allLi.onclick = () => openCategory(mainTitle, `${mainTitle} ಎಲ್ಲಾ`, 'godAll');
+            subCategoryAllEl.appendChild(allLi);
+
+            subGods.forEach(sub => {
+                const count = allGodSongs.filter(s => s.subGod === sub).length;
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${sub}</span><span class="song-count-badge">${count}</span>`;
+                li.onclick = () => openCategory(sub, sub, 'subGod');
+                subCategoryListEl.appendChild(li);
+            });
+
+            setView('sub-category-view');
+            appTitle.textContent = mainTitle;
+            window.scrollTo(0, 0);
+        }
+
+        function renderSongList(songsToDisplay) {
+            songListEl.innerHTML = ''; 
+            songsToDisplay.sort((a, b) => a.title.localeCompare(b.title, 'kn'));
+
+            if (songsToDisplay.length === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+                songsToDisplay.forEach((song, index) => {
+                    const li = document.createElement('li');
+                    
+                    // 👇 THIS IS THE NEW LINE 👇
+                    li.innerHTML = `${song.title} <span style="font-size: 1rem; color: #777; margin-left: 8px;">- ✍️ ${song.dasaru}</span>`;
+                    
+                    li.onclick = () => openSong(song.id);
+                    songListEl.appendChild(li);
+                });
+            }
+        }
+
+        function openSong(id) {
+            const song = dasaSongs.find(s => s.id === id);
+            if (song) {
+                savedScrollPosition = window.scrollY;
+                currentSongId = id; 
+
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('id', id);
+                window.history.pushState({}, '', newUrl);
+
+                songTitleDetail.textContent = song.title;
+		// Build the subtitle with subGod and Dasaru!
+                let subTitle = "";
+                if (song.god) subTitle += ` ${song.subGod}  `;
+                if (song.god && song.dasaru) subTitle += `-  `;
+                if (song.dasaru) subTitle += `ರಚನೆ : ${song.dasaru}`;
+                
+                songDasaruDetail.textContent = subTitle;
+                songLyricsEl.innerHTML = song.lyrics; 
+                
+                if (favoriteSongs.includes(id)) {
+                    favToggleBtn.textContent = '❤️';
+                } else {
+                    favToggleBtn.textContent = '🤍';
+                }
+
+                setView('detail-view');
+                appTitle.textContent = "ಸಾಹಿತ್ಯ (Lyrics)";
+                window.scrollTo(0, 0); 
+            }
+        }
+
+        shareBtn.onclick = async () => {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: songTitleDetail.textContent,
+                        text: `ಈ ಸುಂದರವಾದ ದಾಸ ಸಾಹಿತ್ಯವನ್ನು ಓದಿ: "${songTitleDetail.textContent}"\n\n(Read this beautiful Dasa Sahitya)`,
+                        url: window.location.href 
+                    });
+                } catch (err) { console.log('User cancelled share or error:', err); }
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert("Link copied to clipboard! (ಲಿಂಕ್ ನಕಲಿಸಲಾಗಿದೆ)");
+            }
+        };
+
+        function handleSearch() {
+            const searchTerm = searchInput.value.toLowerCase();
+            if (searchTerm.trim() === '') {
+                goHome();
+                return;
+            }
+            const filtered = dasaSongs.filter(song => 
+                song.title.toLowerCase().includes(searchTerm) || 
+                song.lyrics.toLowerCase().includes(searchTerm)
+            );
+            renderSongList(filtered);
+            
+            setView('list-view');
+            appTitle.textContent = `ಹುಡುಕಾಟ (${filtered.length})`;
+        }
+
+        searchInput.addEventListener('input', handleSearch);
+
+        function clearUrl() {
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete('id');
+            window.history.pushState({}, '', newUrl);
+        }
+
+        function goHome() {
+            clearUrl();
+            setView('dasaru-view');
+            appTitle.textContent = "ದಾಸ ಸಾಹಿತ್ಯ"; 
+            searchInput.value = ''; 
+            window.scrollTo(0, 0);
+        }
+
+        backBtn.onclick = () => {
+            if (aboutView.style.display === 'block') {
+                goHome(); 
+            } else if (detailView.style.display === 'block') {
+                clearUrl(); 
+                setView('list-view');
+                
+                let title = currentCategory === 'all' ? "ಅಕಾರಾದಿ ಪದಗಳ ಸೂಚಿ" : currentCategory;
+                let count = 0;
+                
+                if (currentCategoryType === 'all') count = dasaSongs.length;
+                else if (currentCategoryType === 'god') count = dasaSongs.filter(s => s.god === currentCategory).length;
+                else if (currentCategoryType === 'subGod') count = dasaSongs.filter(s => s.subGod === currentCategory && s.god === currentMainCategory).length;
+                else if (currentCategoryType === 'godAll') { title = `${currentMainCategory} ಎಲ್ಲಾ`; count = dasaSongs.filter(s => s.god === currentMainCategory).length; }
+                else if (currentCategoryType === 'dasaru') count = dasaSongs.filter(s => s.dasaru === currentCategory).length;
+                else if (currentCategoryType === 'favorites') { 
+                    title = "ಮೆಚ್ಚಿನವು (Favorites)"; 
+                    count = favoriteSongs.length; 
+                    renderSongList(dasaSongs.filter(song => favoriteSongs.includes(song.id))); 
+                }
+                
+                appTitle.textContent = `${title} (${count})`;
+                
+                if (searchInput.value.trim() !== '') {
+                    const searchCount = songListEl.children.length;
+                    appTitle.textContent = `ಹುಡುಕಾಟ (${searchCount})`;
+                }
+
+                if (currentCategoryType === 'dasaru' && dasaruNotes[currentCategory] && searchInput.value.trim() === '') {
+                    dasaruInfoBox.style.display = 'block';
+                }
+                
+                window.scrollTo(0, savedScrollPosition);
+            } else if (listView.style.display === 'block') {
+                if (currentCategoryType === 'subGod' || currentCategoryType === 'godAll') {
+                    openCategory(currentMainCategory, currentMainCategory, 'god');
+                } else {
+                    goHome();
+                }
+            } else if (subCategoryView.style.display === 'block') {
+                goHome();
+            }
+        };
+
+        aboutBtn.onclick = () => {
+            clearUrl();
+            setView('about-view');
+            appTitle.textContent = "About";
+            window.scrollTo(0, 0);
+        };
+
+        window.onload = () => {
+            if (typeof dasaSongs !== 'undefined') {
+                renderHomeCategories();
+                const urlParams = new URLSearchParams(window.location.search);
+                const sharedSongId = urlParams.get('id');
+                if (sharedSongId) openSong(parseInt(sharedSongId));
+            } else {
+                allSongsListEl.innerHTML = '<li style="color:red; text-align:center;">Error: Could not load songs.js.</li>';
+            }
+        };
+		// --- INSTALL APP BUTTON LOGIC ---
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+
+        // 1. Wait for the browser to say the app is ready to install
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the default browser pop-up
+            e.preventDefault();
+            // Save the event so we can trigger it later
+            deferredPrompt = e;
+            // Un-hide our custom install button!
+            installBtn.style.display = 'block';
+        });
+
+        // 2. What happens when the user clicks our button
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Show the official install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User installed the app');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                // Hide the button after they make a choice and clear the prompt
+                installBtn.style.display = 'none';
+                deferredPrompt = null;
+            }
+        });
+
+        // 3. If they successfully install it, hide the button forever
+        window.addEventListener('appinstalled', () => {
+            installBtn.style.display = 'none';
+            console.log('App completely installed');
+        });
+    </script>
+
+    <script>
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('copy', function(e) { e.preventDefault(); });
+        document.addEventListener('cut', function(e) { e.preventDefault(); });
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) { 
+                const key = e.key.toLowerCase();
+                if (key === 'c' || key === 'x' || key === 'a' || key === 'u' || key === 's' || key === 'p') {
+                    e.preventDefault();
+                }
+            }
+        });
+    </script>
+	
+<script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => console.log('App is ready for offline use!'))
+                    .catch(err => console.log('Offline setup failed: ', err));
+            });
+        }
+    </script>
+</body>
+</html>
+</body>
+</html>
