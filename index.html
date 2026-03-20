@@ -599,7 +599,7 @@
                     const li = document.createElement('li');
                     
                     // 👇 THIS IS THE NEW LINE 👇
-                    li.innerHTML = `${song.title} <span style="font-size: 1rem; color: #777; margin-left: 8px;">- ✍️ ${song.dasaru}</span>`;
+                    li.innerHTML = `${song.title} <span style="font-size: .8rem; color: #777; margin-left: 8px;"> ${song.dasaru}</span>`;
                     
                     li.onclick = () => openSong(song.id);
                     songListEl.appendChild(li);
